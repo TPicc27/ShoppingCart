@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Anthony Piccirilli
+//Final Project
+//December 5, 2017
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +17,7 @@ namespace ShoppingCart.WebForms
     public partial class Checkout : System.Web.UI.Page
     {
         List<CartObject> cartObj = new List<CartObject>();
+        double itemPrice;
         protected void Page_Load(object sender, EventArgs e)
         {
             cartObj = (List<CartObject>)Session["cart"];
@@ -21,8 +26,9 @@ namespace ShoppingCart.WebForms
             {
                 if(!IsPostBack)
                 {
-                    CartListBox.Items.Add(c.obj.Title + " - " + c.obj.Price.ToString("c"));
-             
+                    itemPrice = c.obj.Price * c.quantity;
+                    CartListBox.Items.Add(c.obj.Title + " - " + itemPrice.ToString("c"));
+                    QuantityTextBox.Enabled = false;
                 }
             }
         }

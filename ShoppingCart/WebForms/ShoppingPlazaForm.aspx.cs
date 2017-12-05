@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Anthony Piccirilli
+//Final Project
+//December 5, 2017
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +20,11 @@ namespace ShoppingCart.WebForms
         List<Product> allProducts = new List<Product>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session.Add("Cart", cart);
+            if(Session["Cart"] == null)
+            {
+                Session.Add("Cart", cart);
+            }
+
             BuildProducts buildProd = new BuildProducts();
             allProducts = (List<Product>)Session["AllProducts"];
 
@@ -84,7 +92,6 @@ namespace ShoppingCart.WebForms
         {
             if (Session["Cart"] != null)
             {
-
                 cart = (List<CartObject>)Session["Cart"];
                 int dvd;
                 int book;
@@ -127,20 +134,21 @@ namespace ShoppingCart.WebForms
                     MessageLbl.Text = "One of the quantities must be more than 0. Otherwise, Please Click Exit";
                 }
             }
-
+           
         }
 
         protected void CheckoutBtn_Click(object sender, EventArgs e)
         {
-                cart = (List<CartObject>)Session["Cart"];
-                if (cart.Count != 0)
-                {
-                    Response.Redirect("Checkout.aspx");
-                }
-                else
-                {
-                    MessageLbl1.Text = "You must have at least one item in your cart to proceed to the checkout screen.";
-                } 
+            cart = (List<CartObject>)Session["Cart"];
+            if (cart.Count != 0)
+            {
+                Response.Redirect("Checkout.aspx");
+            }
+            else
+            {
+                MessageLbl1.Text = "You must have at least one item in your cart to proceed to the checkout screen.";
+            }
+
         }
 
         protected void ExitBtn_Click(object sender, EventArgs e)
